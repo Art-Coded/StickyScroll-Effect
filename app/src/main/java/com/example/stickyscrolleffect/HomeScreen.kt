@@ -11,9 +11,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -30,17 +31,16 @@ fun HomeScreen() {
                 textAlign = TextAlign.Center
             )
 
-
             StickyCard(label = "Sticky box (with contents)") {
-                // Handle Sticky box click
+                navController.navigate("stickyBox")
             }
 
             StickyCard(label = "Sticky button") {
-                // Handle Sticky button click
+                navController.navigate("stickyButton")
             }
 
             StickyCard(label = "Sticky header") {
-                // Handle Sticky header click
+                navController.navigate("stickyHeader")
             }
         }
     }
