@@ -2,7 +2,9 @@ package com.example.stickyscrolleffect
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,13 +17,18 @@ import androidx.navigation.NavController
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    Column(modifier = Modifier.fillMaxSize()) {
+
+    val scrollState = rememberScrollState()
+
+    Column(modifier = Modifier
+        .verticalScroll(scrollState)
+        .fillMaxSize()) {
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 50.dp, start = 8.dp, end = 8.dp, bottom = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
 
             Text(
