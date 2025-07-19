@@ -38,13 +38,13 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(navController = navController)
                         }
                         composable("stickyButton") {
-                            ButtonScreen()
+                            ButtonScreen(navController = navController)
                         }
                         composable("stickyHeader") {
-                            HeaderScreen()
+                            HeaderScreen(navController = navController)
                         }
                         composable("stickyBox") {
-                            BoxScreen()
+                            BoxScreen(navController = navController)
                         }
                     }
                 }
