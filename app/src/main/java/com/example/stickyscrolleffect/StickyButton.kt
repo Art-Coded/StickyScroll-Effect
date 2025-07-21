@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 @Composable
 fun ButtonScreen(navController: NavController) {
 
+    val hasMeasured = remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     val forYouBoxOffsetY = remember { mutableStateOf(0f) }
     val forYouBoxHeight = remember { mutableStateOf(0f) }
@@ -71,10 +72,10 @@ fun ButtonScreen(navController: NavController) {
         // Is the box scrolled past its original position?
         val isSticky by remember {
             derivedStateOf {
-                // Adjust threshold here
-                forYouBoxOffsetY.value <= 1f  // for example, once it's near the top
+                hasMeasured.value && forYouBoxOffsetY.value <= 1f
             }
         }
+
 
 
 
@@ -96,7 +97,9 @@ fun ButtonScreen(navController: NavController) {
                                 val position = layoutCoordinates.positionInParent()
                                 forYouBoxOffsetY.value = position.y
                                 forYouBoxHeight.value = layoutCoordinates.size.height.toFloat()
+                                hasMeasured.value = true
                             }
+
                             .height(1600.dp)
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.surface)
@@ -115,24 +118,15 @@ fun ButtonScreen(navController: NavController) {
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
+                                        .height(200.dp)
                                         .padding(bottom = 12.dp)
                                         .background(
-                                            Color.White,
+                                            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
                                             shape = MaterialTheme.shapes.medium
                                         )
                                         .padding(16.dp)
                                 ) {
-                                    Column {
-                                        Text(
-                                            "🔥 Trending Article #${it + 1}",
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                        Text(
-                                            "This is a short summary of a trending topic or article to catch user attention.",
-                                            style = MaterialTheme.typography.bodySmall,
-                                            modifier = Modifier.padding(top = 4.dp)
-                                        )
-                                    }
+                                    //CONTENT HERE
                                 }
                             }
 
