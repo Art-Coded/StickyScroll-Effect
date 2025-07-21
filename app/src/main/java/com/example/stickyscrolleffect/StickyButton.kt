@@ -69,7 +69,7 @@ fun ButtonScreen(navController: NavController) {
             }
         }
 
-        // Is the box scrolled past its original position?
+
         val isSticky by remember {
             derivedStateOf {
                 hasMeasured.value && forYouBoxOffsetY.value <= 1f
