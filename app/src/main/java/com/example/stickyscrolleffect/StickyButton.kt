@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,8 +39,9 @@ import androidx.navigation.NavController
 @Composable
 fun ButtonScreen(navController: NavController) {
 
+    val scrollState = rememberScrollState()
+
     val hasMeasured = remember { mutableStateOf(false) }
-    val listState = rememberLazyListState()
     val forYouBoxOffsetY = remember { mutableStateOf(0f) }
     val forYouBoxHeight = remember { mutableStateOf(0f) }
 
@@ -69,19 +72,15 @@ fun ButtonScreen(navController: NavController) {
             }
         }
 
-
         val isSticky by remember {
             derivedStateOf {
-                hasMeasured.value && forYouBoxOffsetY.value <= 1f
+                hasMeasured.value && scrollState.value >= forYouBoxOffsetY.value
             }
         }
 
-
-
-
         Box(modifier = Modifier.fillMaxSize()) {
-            LazyColumn(state = listState) {
-                items(20) { index ->
+            Column(modifier = Modifier.verticalScroll(scrollState)) {
+                repeat(20) { index ->
                     Text(
                         "Item $index",
                         modifier = Modifier
@@ -90,93 +89,88 @@ fun ButtonScreen(navController: NavController) {
                     )
                 }
 
-                item {
-                    Box(
-                        modifier = Modifier
-                            .onGloballyPositioned { layoutCoordinates ->
-                                val position = layoutCoordinates.positionInParent()
-                                forYouBoxOffsetY.value = position.y
-                                forYouBoxHeight.value = layoutCoordinates.size.height.toFloat()
-                                hasMeasured.value = true
-                            }
+                Box(
+                    modifier = Modifier
+                        .onGloballyPositioned { layoutCoordinates ->
+                            val position = layoutCoordinates.positionInParent()
+                            forYouBoxOffsetY.value = position.y
+                            forYouBoxHeight.value = layoutCoordinates.size.height.toFloat()
+                            hasMeasured.value = true
+                        }
 
-                            .height(1600.dp)
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surface)
-                            .padding(16.dp)
-                    ) {
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            Text(
-                                "✨ For You Page (Static)",
-                                fontWeight = FontWeight.Bold,
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.padding(bottom = 16.dp)
-                            )
+                        .height(1600.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(16.dp)
+                ) {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            "✨ For You Page (Static)",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
 
-                            // Mock design
-                            repeat(3) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(200.dp)
-                                        .padding(bottom = 12.dp)
-                                        .background(
-                                            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
-                                            shape = MaterialTheme.shapes.medium
-                                        )
-                                        .padding(16.dp)
-                                ) {
-                                    //CONTENT HERE
-                                }
-                            }
-
-                            // Mock Section 2: Horizontal "People You May Know"
-                            Text(
-                                "👥 People You May Know",
-                                fontWeight = FontWeight.Bold,
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.padding(vertical = 12.dp)
-                            )
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                repeat(4) {
-                                    Column(
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .padding(4.dp)
-                                    ) {
-                                        Box(
-                                            modifier = Modifier
-                                                .size(64.dp)
-                                                .clip(CircleShape)
-                                                .background(Color.DarkGray)
-                                        )
-                                        Text(
-                                            "User ${it + 1}",
-                                            style = MaterialTheme.typography.bodySmall,
-                                            modifier = Modifier.padding(top = 4.dp)
-                                        )
-                                    }
-                                }
-                            }
-
-                            // Mock Section 3: Featured Image Banner
-                            Spacer(modifier = Modifier.height(24.dp))
+                        // Mock design
+                        repeat(3) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                            )
-
+                                    .height(200.dp)
+                                    .padding(bottom = 12.dp)
+                                    .background(
+                                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                                        shape = MaterialTheme.shapes.medium
+                                    )
+                                    .padding(16.dp)
+                            ) {
+                                //CONTENT DD
+                            }
                         }
+
+                        Text(
+                            "👥 People You May Know",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.padding(vertical = 12.dp)
+                        )
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            repeat(4) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .padding(4.dp)
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(64.dp)
+                                            .clip(CircleShape)
+                                            .background(Color.DarkGray)
+                                    )
+                                    Text(
+                                        "User ${it + 1}",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        modifier = Modifier.padding(top = 4.dp)
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+
                     }
                 }
             }
 
-            // Sticky overlay part
             if (isSticky) {
                 Box(
                     modifier = Modifier
