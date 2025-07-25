@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,12 +28,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import kotlinx.coroutines.launch
 
 @Composable
 fun TiktokScreen(navController: NavController) {
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    val scrollState = rememberScrollState()
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(scrollState)) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -60,12 +65,11 @@ fun TiktokScreen(navController: NavController) {
         }
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = "Account",
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(start = 32.dp, top = 16.dp),
                 fontSize = 13.sp
             )
             Surface(
@@ -78,13 +82,16 @@ fun TiktokScreen(navController: NavController) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     SettingsItem(title = "Account", iconResId = R.drawable.ic_account, onClick = { })
-                    SettingsItem(title = "Privacy and Security", iconResId = R.drawable.ic_security, onClick = { })
+                    SettingsItem(title = "Privacy", iconResId = R.drawable.ic_security, onClick = { })
+                    SettingsItem(title = "Security & permissions", iconResId = R.drawable.ic_security, onClick = { })
+                    SettingsItem(title = "Analytics", iconResId = R.drawable.ic_security, onClick = { })
+                    SettingsItem(title = "Share profile", iconResId = R.drawable.ic_security, onClick = { })
                 }
             }
 
             Text(
-                text = "Display",
-                modifier = Modifier.padding(top = 16.dp),
+                text = "Content & Display",
+                modifier = Modifier.padding(start = 32.dp, top = 16.dp),
                 fontSize = 13.sp
             )
             Surface(
@@ -97,14 +104,46 @@ fun TiktokScreen(navController: NavController) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     SettingsItem(title = "Notification", iconResId = R.drawable.ic_notification, onClick = { })
+                    SettingsItem(title = "LIVE", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Music", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Activity center", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Content preferences", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Audience controls", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Ads", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Playback", iconResId = R.drawable.ic_display, onClick = {  })
                     SettingsItem(title = "Display", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Language", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Screen Time", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Family Pairing", iconResId = R.drawable.ic_display, onClick = {  })
+                    SettingsItem(title = "Accessibility", iconResId = R.drawable.ic_display, onClick = {  })
+                }
+            }
+
+
+            Text(
+                text = "Cache & Cellular",
+                modifier = Modifier.padding(start = 32.dp, top = 16.dp),
+                fontSize = 13.sp
+            )
+            Surface(
+                tonalElevation = 2.dp,
+                shape = MaterialTheme.shapes.medium,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    SettingsItem(title = "Offline videos", iconResId = R.drawable.ic_report, onClick = { })
+                    SettingsItem(title = "Free up space", iconResId = R.drawable.ic_support, onClick = { })
+                    SettingsItem(title = "Data Saver", iconResId = R.drawable.ic_terms, onClick = { })
                 }
             }
 
 
             Text(
                 text = "Support & About",
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(start = 32.dp, top = 16.dp),
                 fontSize = 13.sp
             )
             Surface(
@@ -122,27 +161,10 @@ fun TiktokScreen(navController: NavController) {
                 }
             }
 
-            Text(
-                text = "Support Us \uD83E\uDDE1",
-                modifier = Modifier.padding(top = 16.dp),
-                fontSize = 13.sp
-            )
-            Surface(
-                tonalElevation = 2.dp,
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    SettingsItem(title = "Contribute", iconResId = R.drawable.ic_smile, onClick = { })
-                }
-            }
 
             Text(
                 text = "Login",
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(start = 32.dp, top = 16.dp),
                 fontSize = 13.sp
             )
             Surface(
