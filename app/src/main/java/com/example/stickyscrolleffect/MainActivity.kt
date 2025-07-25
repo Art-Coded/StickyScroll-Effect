@@ -46,6 +46,9 @@ class MainActivity : ComponentActivity() {
                         composable("stickyBox") {
                             BoxScreen(navController = navController)
                         }
+                        composable("tiktokUI") {
+                            TiktokScreen(navController = navController)
+                        }
                     }
                 }
             }

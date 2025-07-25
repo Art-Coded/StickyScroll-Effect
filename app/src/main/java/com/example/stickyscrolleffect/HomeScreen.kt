@@ -49,6 +49,10 @@ fun HomeScreen(navController: NavController) {
             StickyCard(label = "Sticky header") {
                 navController.navigate("stickyHeader")
             }
+
+            StickyCard(label = "Tiktok inspired settings UI") {
+                navController.navigate("tiktokUI")
+            }
         }
     }
 }
